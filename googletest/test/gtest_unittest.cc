@@ -3655,6 +3655,21 @@ TEST(AssertionTest, EqFailureWithDiff) {
       msg1.c_str());
 }
 
+TEST(AssertionTest, EqFailureWithDiffAndTrailingNewline) {
+  const std::string left("\"alpha\\nbeta\\ngamma\\n\"");
+  const std::string right("\"alpha\\nbeta\\ndelta\\n\"");
+  const std::string msg(
+      EqFailure("left", "right", left, right, false).failure_message());
+  EXPECT_STREQ(
+      "Expected equality of these values:\n"
+      "  left\n"
+      "    Which is: \"alpha\\nbeta\\ngamma\\n\"\n"
+      "  right\n"
+      "    Which is: \"alpha\\nbeta\\ndelta\\n\"\n"
+      "With diff:\n@@ -1,4 +1,4 @@\n alpha\n beta\n-gamma\n+delta\n \n",
+      msg.c_str());
+}
+
 // Tests AppendUserMessage(), used for implementing the *EQ* macros.
 TEST(AssertionTest, AppendUserMessage) {
   const std::string foo("foo");

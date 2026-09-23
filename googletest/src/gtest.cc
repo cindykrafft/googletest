@@ -1628,7 +1628,7 @@ std::vector<std::string> SplitEscapedString(const std::string& str) {
     --end;
   }
   bool escaped = false;
-  for (size_t i = start; i + 1 < end; ++i) {
+  for (size_t i = start; i < end; ++i) {
     if (escaped) {
       escaped = false;
       if (str[i] == 'n') {
